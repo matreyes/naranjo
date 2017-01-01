@@ -1,0 +1,14 @@
+<div class="jumbotron">
+  <h2>Sistema de calendarización</h2>
+  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+</div>
+
+<div class="row marketing">
+  <div class="col-lg-6">
+    <h1>Alumnos</h1>
+  </div>
+
+  <div class="col-lg-6">
+   <h1>Profesores</h1>
+  </div>
+</div>
