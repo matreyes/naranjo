@@ -1,6 +1,6 @@
-<h2>Edit room</h2>
+<h2>Editar Sala</h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: room_path(@conn, :update, @room) %>
 
-<%= link "Back", to: room_path(@conn, :index) %>
+<%= link "Volver", to: room_path(@conn, :index) %>

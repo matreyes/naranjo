@@ -1,14 +1,12 @@
-<h2>Estudiantes</h2>
+<h2>Alumnos</h2>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Nombre</th>
       <th>Email</th>
-      <th>Active</th>
-      <!-- <th>Notes</th> -->
-      <th>Weekday</th>
-
+      <th>Activo</th>
+      <th>Día</th>
       <th></th>
     </tr>
   </thead>
@@ -18,17 +16,16 @@
           <td><%= student.name %></td>
           <td><small><%= student.email %></small></td>
           <td><%= student.active %></td>
-          <!-- <td><%= student.notes %></td> -->
           <td><%= student.weekday.day %></td>
 
           <td class="text-right">
             <!-- <%= link "Show", to: student_path(@conn, :show, student), class: "btn btn-default btn-xs" %> -->
-            <%= link "Edit", to: student_path(@conn, :edit, student), class: "btn btn-default btn-xs" %>
-            <%= link "Delete", to: student_path(@conn, :delete, student), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+            <%= link "Editar", to: student_path(@conn, :edit, student), class: "btn btn-default btn-xs" %>
+            <%= link "Eliminar", to: student_path(@conn, :delete, student), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
           </td>
         </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link "New student", to: student_path(@conn, :new), class: "btn btn-primary" %>
+<%= link "Nuevo alumno", to: student_path(@conn, :new), class: "btn btn-primary" %>

@@ -1,4 +1,4 @@
-<h2>Show student</h2>
+<h2>Alumno:</h2>
 
 <ul>
 
@@ -25,5 +25,5 @@
 
 </ul>
 
-<%= link "Edit", to: student_path(@conn, :edit, @student) %>
-<%= link "Back", to: student_path(@conn, :index) %>
+<%= link "Editar", to: student_path(@conn, :edit, @student) %>
+<%= link "Volver", to: student_path(@conn, :index) %>

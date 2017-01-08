@@ -4,7 +4,7 @@ defmodule Naranjo.Room do
 
   schema "rooms" do
     field :name, :string
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     has_many :weekdays, Weekday, on_delete: :delete_all
 
     timestamps()

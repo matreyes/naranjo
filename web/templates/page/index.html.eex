@@ -1,8 +1,5 @@
-<div class="jumbotron">
-  <h2>Sistema de Asignación de Horarios</h2>
-</div>
-<br />
-<div class="row">
+
+<div class="row" style="margin-top: 150px">
   <div class="col-lg-4 text-center">
     <%= link "ALUMNOS", to: student_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
   </div>

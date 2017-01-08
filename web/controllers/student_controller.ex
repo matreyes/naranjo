@@ -43,10 +43,10 @@ defmodule Naranjo.StudentController do
     changeset = Student.changeset(student, student_params)
 
     case (Repo.update(changeset)) do
-      {:ok, student} ->
+      {:ok, _student} ->
         conn
         |> put_flash(:info, "Student updated successfully.")
-        |> redirect(to: student_path(conn, :show, student))
+        |> redirect(to: student_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", student: student, changeset: changeset)
     end

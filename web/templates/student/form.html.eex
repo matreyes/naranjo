@@ -6,7 +6,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
+    <%= label f, :name, "Nombre", class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
@@ -18,13 +18,13 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :active, class: "control-label" %>
+    <%= label f, :active, "Activo", class: "control-label" %>
     <%= checkbox f, :active, class: "form-control" %>
     <%= error_tag f, :active %>
   </div>
 
   <div class="form-group">
-    <%= label f, :notes, class: "control-label" %>
+    <%= label f, :notes, "Notas", class: "control-label" %>
     <%= textarea f, :notes, class: "form-control" %>
     <%= error_tag f, :notes %>
   </div>
@@ -55,6 +55,6 @@
 
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "Guardar", class: "btn btn-primary" %>
   </div>
 <% end %>

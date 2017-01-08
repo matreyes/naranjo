@@ -45,10 +45,10 @@ defmodule Naranjo.TeacherController do
     changeset = Teacher.changeset(teacher, teacher_params)
 
     case Repo.update(changeset) do
-      {:ok, teacher} ->
+      {:ok, _teacher} ->
         conn
         |> put_flash(:info, "Teacher updated successfully.")
-        |> redirect(to: teacher_path(conn, :show, teacher))
+        |> redirect(to: teacher_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", teacher: teacher, changeset: changeset)
     end

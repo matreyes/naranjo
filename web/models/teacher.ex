@@ -1,11 +1,11 @@
 defmodule Naranjo.Teacher do
   use Naranjo.Web, :model
   alias Naranjo.Weekday
-  
+
   schema "teachers" do
     field :name, :string
     field :email, :string
-    field :active, :boolean, default: false
+    field :active, :boolean, default: true
     field :notes, :string
     has_many :weekdays, Weekday, on_delete: :delete_all
 

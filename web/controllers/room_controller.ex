@@ -45,10 +45,10 @@ defmodule Naranjo.RoomController do
     changeset = Room.changeset(room, room_params)
 
     case Repo.update(changeset) do
-      {:ok, room} ->
+      {:ok, _room} ->
         conn
         |> put_flash(:info, "Room updated successfully.")
-        |> redirect(to: room_path(conn, :show, room))
+        |> redirect(to: room_path(conn, :index))
       {:error, changeset} ->
         render(conn, "edit.html", room: room, changeset: changeset)
     end
