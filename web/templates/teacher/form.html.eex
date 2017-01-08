@@ -40,9 +40,8 @@
     <%= inputs_for f, :weekdays,  fn w -> %>
       <tr>
         <td>
-          <!-- <%= select w, :day, weekdays %>
-          <% IO.inspect w %> -->
           <%= w.data.day %>
+          <%= hidden_input w, :day %>
         </td>
         <%= for {k,h} <- Enum.with_index(w.data.hours) do %>
           <td class="text-center">

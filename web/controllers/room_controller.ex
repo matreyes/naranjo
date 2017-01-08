@@ -2,6 +2,7 @@ defmodule Naranjo.RoomController do
   use Naranjo.Web, :controller
 
   alias Naranjo.Room
+  alias Naranjo.Weekday
 
   def index(conn, _params) do
     rooms = Repo.all(Room)
@@ -9,13 +10,13 @@ defmodule Naranjo.RoomController do
   end
 
   def new(conn, _params) do
-    changeset = Room.changeset(%Room{})
+    changeset = Room.changeset(%Room{weekdays: Weekday.all_default_weekdays})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"room" => room_params}) do
     changeset = Room.changeset(%Room{}, room_params)
-
+    IO.inspect changeset
     case Repo.insert(changeset) do
       {:ok, _room} ->
         conn
@@ -32,13 +33,15 @@ defmodule Naranjo.RoomController do
   end
 
   def edit(conn, %{"id" => id}) do
-    room = Repo.get!(Room, id)
-    changeset = Room.changeset(room)
-    render(conn, "edit.html", room: room, changeset: changeset)
+    room = Repo.get!(Room, id) |> Repo.preload([:weekdays])
+    sorted_weekdays = Weekday.days_list |> Enum.map(fn(d) -> Enum.find(room.weekdays, fn(rwd) -> rwd.day == d end) end)
+    sorted_room = Map.merge(room, %{weekdays: sorted_weekdays})
+    changeset = Room.changeset(sorted_room)
+    render(conn, "edit.html", room: sorted_room, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "room" => room_params}) do
-    room = Repo.get!(Room, id)
+    room = Repo.get!(Room, id) |> Repo.preload([:weekdays])
     changeset = Room.changeset(room, room_params)
 
     case Repo.update(changeset) do

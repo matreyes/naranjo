@@ -34,8 +34,10 @@ defmodule Naranjo.TeacherController do
 
   def edit(conn, %{"id" => id}) do
     teacher = Repo.get!(Teacher, id) |> Repo.preload([:weekdays])
-    changeset = Teacher.changeset(teacher)
-    render(conn, "edit.html", teacher: teacher, changeset: changeset)
+    sorted_weekdays = Weekday.days_list |> Enum.map(fn(d) -> Enum.find(teacher.weekdays, fn(twd) -> twd.day == d end) end)
+    sorted_teacher = Map.merge(teacher, %{weekdays: sorted_weekdays})
+    changeset = Teacher.changeset(sorted_teacher)
+    render(conn, "edit.html", teacher: sorted_teacher, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "teacher" => teacher_params}) do

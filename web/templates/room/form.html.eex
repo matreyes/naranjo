@@ -17,6 +17,29 @@
     <%= error_tag f, :active %>
   </div>
 
+  <h3>Disponibilidad</h3>
+  <table class="table">
+    <tr>
+      <th>Día</th>
+      <%= for h <- available_hours do %>
+        <th class="text-center"><%= "#{h}:00" %></th>
+      <% end %>
+    </tr>
+    <%= inputs_for f, :weekdays,  fn w -> %>
+      <tr>
+        <td>
+          <%= w.data.day %>
+          <%= hidden_input w, :day %>
+        </td>
+        <%= for {k,h} <- Enum.with_index(w.data.hours) do %>
+          <td class="text-center">
+            <input type="checkbox" name="<%= w.name %>[hours][]" value="<%= h %>" <%= checked(k) %>>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>

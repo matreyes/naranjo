@@ -1,18 +1,23 @@
 <div class="jumbotron">
   <h2>Sistema de Asignación de Horarios</h2>
 </div>
-
-<div class="row marketing">
+<br />
+<div class="row">
   <div class="col-lg-4 text-center">
-    <%= link "ALUMNOS", to: student_path(@conn, :index), class: "btn btn-lg btn-default" %>
+    <%= link "ALUMNOS", to: student_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
   </div>
 
   <div class="col-lg-4 text-center">
-    <%= link "PROFESORES", to: teacher_path(@conn, :index), class: "btn btn-lg btn-default" %>
+    <%= link "PROFESORES", to: teacher_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
   </div>
 
-
   <div class="col-lg-4 text-center">
-     <h1>SALAS</h1>
+    <%= link "SALAS", to: room_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg-12 text-center">
+    <%= link "PROCESAR", to: "#", class: "btn btn-lg btn-primary btn-block" %>
   </div>
 </div>
