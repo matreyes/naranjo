@@ -18,6 +18,8 @@ defmodule Naranjo.Router do
 
     get "/", PageController, :index
     resources "/students", StudentController
+    resources "/teachers", TeacherController
+    resources "/rooms", RoomController
   end
 
   # Other scopes may use custom stacks.

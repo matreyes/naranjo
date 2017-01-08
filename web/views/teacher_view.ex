@@ -1,4 +1,4 @@
-defmodule Naranjo.StudentView do
+defmodule Naranjo.TeacherView do
   use Naranjo.Web, :view
 
   def weekdays do
@@ -11,5 +11,4 @@ defmodule Naranjo.StudentView do
 
   def checked(true), do: "checked"
   def checked(false), do: ""
-
 end

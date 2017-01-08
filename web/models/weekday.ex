@@ -8,14 +8,21 @@ defmodule Naranjo.Weekday do
     field :day, WeekdayEnum
     field :hours, {:array, :boolean}, default: @default_hours
     belongs_to :student, Naranjo.Student
-    # belongs_to :teacher, Naranjo.Teacher
-    # belongs_to :room, Naranjo.Room
+    belongs_to :teacher, Naranjo.Teacher
+    belongs_to :room, Naranjo.Room
 
     timestamps()
   end
 
   def available_hours, do: @available_hours
   def default_hours, do: @default_hours
+
+  def all_default_weekdays do
+    days_list
+      |> Enum.map(fn (d) -> %Naranjo.Weekday{day: d} end)
+  end
+
+  def days_list, do: Keyword.keys(WeekdayEnum.__enum_map__())
 
   def reference_hours(string_array) do
     arr = Enum.map(string_array, &String.to_integer/1)

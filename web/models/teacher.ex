@@ -1,13 +1,13 @@
-defmodule Naranjo.Student do
+defmodule Naranjo.Teacher do
   use Naranjo.Web, :model
   alias Naranjo.Weekday
-
-  schema "students" do
+  
+  schema "teachers" do
     field :name, :string
     field :email, :string
-    field :active, :boolean, default: true
+    field :active, :boolean, default: false
     field :notes, :string
-    has_one :weekday, Weekday, on_delete: :delete_all
+    has_many :weekdays, Weekday, on_delete: :delete_all
 
     timestamps()
   end
@@ -18,8 +18,7 @@ defmodule Naranjo.Student do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :email, :active, :notes])
-    |> cast_assoc(:weekday, required: true, with: &Weekday.changeset/2)
-    |> validate_required([:name, :email])
-    |> validate_format(:email, ~r/@/)
+    |> cast_assoc(:weekdays, with: &Weekday.changeset/2)
+    |> validate_required([:name, :email, :active, :notes])
   end
 end

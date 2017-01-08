@@ -43,10 +43,10 @@ form.link, form.button {
 }
 
 /* Customize container */
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+@media (min-width: 1200px) {
+    .container{
+        max-width: 970px;
+    }
 }
 .container-narrow > hr {
   margin: 30px 0;
