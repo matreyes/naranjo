@@ -1,14 +1,18 @@
 <div class="jumbotron">
-  <h2>Sistema de calendarización</h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+  <h2>Sistema de Asignación de Horarios</h2>
 </div>
 
 <div class="row marketing">
-  <div class="col-lg-6">
-    <h1>Alumnos</h1>
+  <div class="col-lg-4 text-center">
+    <%= link "ALUMNOS", to: student_path(@conn, :index), class: "btn btn-lg btn-default" %>
   </div>
 
-  <div class="col-lg-6">
-   <h1>Profesores</h1>
+  <div class="col-lg-4 text-center">
+     <h1>PROFESORES</h1>
+  </div>
+
+
+  <div class="col-lg-4 text-center">
+     <h1>SALAS</h1>
   </div>
 </div>

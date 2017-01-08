@@ -4,12 +4,13 @@ defmodule Naranjo.StudentController do
   alias Naranjo.Student
 
   def index(conn, _params) do
-    students = Repo.all(from s in Student, where: s.active == true)
+    # students = Repo.all(from s in Student, where: s.active == true) |>
+    students = Repo.all(Student) |> Repo.preload([:weekday])
     render(conn, "index.html", students: students)
   end
 
   def new(conn, _params) do
-    changeset = Student.changeset(%Student{})
+    changeset = Student.changeset(%Student{weekday: %Naranjo.Weekday{}})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -32,13 +33,13 @@ defmodule Naranjo.StudentController do
   end
 
   def edit(conn, %{"id" => id}) do
-    student = Repo.get!(Student, id)
+    student = Repo.get!(Student, id) |> Repo.preload([:weekday])
     changeset = Student.changeset(student)
     render(conn, "edit.html", student: student, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "student" => student_params}) do
-    student = Repo.get!(Student, id)
+    student = Repo.get!(Student, id) |> Repo.preload([:weekday])
     changeset = Student.changeset(student, student_params)
 
     case (Repo.update(changeset)) do
