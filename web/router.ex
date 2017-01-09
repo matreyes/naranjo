@@ -17,6 +17,8 @@ defmodule Naranjo.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/process", ProcessController, :new
+    get "/process/:day", ProcessController, :configure
     resources "/students", StudentController
     resources "/teachers", TeacherController
     resources "/rooms", RoomController

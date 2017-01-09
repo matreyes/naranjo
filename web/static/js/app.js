@@ -19,3 +19,14 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+import React from "react"
+import ReactDOM from "react-dom"
+import Processor from "./processor/processor"
+
+if(document.getElementById("hello-world") != null){
+  ReactDOM.render(
+    <Processor/>,
+    document.getElementById("hello-world")
+  )  
+}
