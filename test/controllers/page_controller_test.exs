@@ -3,7 +3,7 @@ defmodule Naranjo.PageControllerTest do
 
   def with_valid_authorization_header(conn) do
     conn
-    |> put_req_header("authorization", "Basic dXNlcjpzWNyZXQ=")
+    |> put_req_header("authorization", "Basic bmFyYW5qbzpzZWNyZXRfMXgyeHg=")
   end
 
   def with_invalid_authorization_header(conn) do
@@ -23,7 +23,7 @@ defmodule Naranjo.PageControllerTest do
     |> with_valid_authorization_header()
     |> get("/")
 		
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert html_response(conn, 200)
 
   end
 
