@@ -39,5 +39,5 @@ config :naranjo, Naranjo.Repo,
   username: "postgres",
   password: "postgres",
   database: "naranjo_dev",
-  hostname: "localhost",
+  hostname: "postgresql",
   pool_size: 10
