@@ -15,5 +15,5 @@ config :naranjo, Naranjo.Repo,
   username: "postgres",
   password: "postgres",
   database: "naranjo_test",
-  hostname: "localhost",
+  hostname: "postgresql",
   pool: Ecto.Adapters.SQL.Sandbox
