@@ -24,12 +24,12 @@ config :logger, level: :info
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-#     config :naranjo, Naranjo.Endpoint,
-#       ...
-#       url: [host: "example.com", port: 443],
-#       https: [port: 443,
-#               keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-#               certfile: System.get_env("SOME_APP_SSL_CERT_PATH")]
+     config :naranjo, Naranjo.Endpoint,
+       ...
+       url: [host: "example.com", port: 443],
+       server: true,
+       root: ".",
+       version: Mix.Project.config[:version]
 #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,
