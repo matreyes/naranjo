@@ -41,7 +41,9 @@ services:
     links:
       - "postgresql:postgresql"
     environment:
-    - MIX_ENV=prod
+      - MIX_ENV=prod mix do compile, phoenix.digest, release --env=prod
+    volumes:
+      - ../:/root/app
   postgresql:
     build: postgresql/.
     image: naranjo/postgresql
