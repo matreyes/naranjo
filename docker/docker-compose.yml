@@ -1,0 +1,61 @@
+version: "2"
+services:
+  base:
+    build: base/.
+    image: naranjo/base
+  server:
+    build: server/.
+    image: naranjo/server
+    volumes:
+      - ../:/root/app
+    depends_on:
+      - base
+  dev:
+    build: dev/.
+    image: naranjo/dev
+    volumes:
+      - ../:/root/app
+    links:
+      - "postgresql:postgresql"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - server
+  test:
+    build: test/.
+    image: naranjo/test
+    volumes:
+      - ../:/root/app
+    depends_on:
+      - server
+    links:      
+      - "postgresql:postgresql"
+    environment:
+      - MIX_ENV=test
+    command: /bin/bash -c "cd /root/app/naranjo && mix local.hex --force && mix local.rebar && yes Y | mix deps.get && mix test"
+  prod:
+    build: prod/.
+    image: naranjo/prod
+    depends_on:
+      - server
+    links:
+      - "postgresql:postgresql"
+    environment:
+    - MIX_ENV=prod
+  postgresql:
+    build: postgresql/.
+    image: naranjo/postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes_from:
+      - dbdata
+  dbdata:
+    image: "postgres:9.5"
+    volumes:
+      - /var/lib/postgres
+    command: "true"
+  
+ 
