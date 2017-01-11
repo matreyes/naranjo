@@ -15,7 +15,7 @@ defmodule Naranjo.PageControllerTest do
     conn = get conn, "/"
 
     assert response(conn, 401) == "unauthorized"
-    assert get_resp_header(conn, "www-authenticate") == ["Basic realm=\"Thou Shalt not pass\""
+    assert get_resp_header(conn, "www-authenticate") == ["Basic realm=\"Thou Shalt not pass\""]
   end
 
   test "GET / with correct authorization should be OK", %{conn: conn} do
