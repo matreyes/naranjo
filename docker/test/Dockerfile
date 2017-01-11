@@ -1,6 +1,3 @@
-FROM honeycomb/server
-
-# The TEST container contains a testbed for HONEYCOMB with associated
-# tools.
+FROM naranjo/server
 
 RUN apt update

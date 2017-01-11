@@ -1,4 +1,4 @@
-FROM honeycomb/base
+FROM naranjo/base
 
 # key tools are highlighted
 

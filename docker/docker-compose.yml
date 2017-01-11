@@ -32,7 +32,7 @@ services:
       - "postgresql:postgresql"
     environment:
       - MIX_ENV=test
-    command: /bin/bash -c "cd /root/app/honeycomb && mix local.hex --force && mix local.rebar && yes Y | mix deps.get && mix test"
+    command: /bin/bash -c "cd /root/app/naranjo && mix local.hex --force && mix local.rebar && yes Y | mix deps.get && mix test"
   prod:
     build: prod/.
     image: naranjo/prod

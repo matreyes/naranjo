@@ -1,5 +1,3 @@
-FROM honeycomb/server
-
-# The PROD container contains production-ready code for HONEYCOMB
+FROM naranjo/server
 
 RUN apt update
