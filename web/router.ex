@@ -18,6 +18,7 @@ defmodule Naranjo.Router do
 
     get "/", PageController, :index
     get "/process", ProcessController, :new
+    post "/process", ProcessController, :create
     get "/process/:day", ProcessController, :configure
     resources "/students", StudentController
     resources "/teachers", TeacherController

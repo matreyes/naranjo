@@ -1,1 +1,67 @@
-<div id="hello-world"></div>
+<!-- <div id="hello-world"></div> -->
+<h2>
+  Configuración para
+  "<%= @conn.params["day"] %>"
+</h2>
+<%= form_tag "/process" do %>
+  <h4>Alumnos</h4>
+  <%= for s <- @students do %>
+    <table class="table">
+      <tr>
+        <td></td>
+        <%= for h <- available_hours do %>
+          <th class="text-center"><%= "#{h}:00" %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= s.name %></td>
+        <%= for {k,h} <- Enum.with_index(s.hours) do %>
+          <td class="text-center">
+            <input type="checkbox" name="student[<%= s.id %>][hours][]" value="<%= h %>" <%= checked(k) %>>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+  <% end %>
+  <hr>
+  <h4>Profesores</h4>
+  <%= for t <- @teachers do %>
+    <table class="table">
+      <tr>
+        <td></td>
+        <%= for h <- available_hours do %>
+          <th class="text-center"><%= "#{h}:00" %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= t.name %></td>
+        <%= for {k,h} <- Enum.with_index(t.hours) do %>
+          <td class="text-center">
+            <input type="checkbox" name="teacher[<%= t.id %>][hours][]" value="<%= h %>" <%= checked(k) %>>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+  <% end %>
+  <hr>
+  <h4>Salas</h4>
+  <%= for r <- @rooms do %>
+    <table class="table">
+      <tr>
+        <td></td>
+        <%= for h <- available_hours do %>
+          <th class="text-center"><%= "#{h}:00" %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <td><%= r.name %></td>
+        <%= for {k,h} <- Enum.with_index(r.hours) do %>
+          <td class="text-center">
+            <input type="checkbox" name="room[<%= r.id %>][hours][]" value="<%= h %>" <%= checked(k) %>>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+  <% end %>
+  <button type="submit" class="btn btn-lg btn-primary btn-block">PROCESAR</button>
+<% end %>
