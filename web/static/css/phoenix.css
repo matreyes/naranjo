@@ -30,3 +30,7 @@ form.link, form.button {
         max-width: 970px;
     }
 }
+
+.name{
+  width: 135px;
+}

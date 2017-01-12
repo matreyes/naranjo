@@ -16,7 +16,6 @@ defmodule Naranjo.RoomController do
 
   def create(conn, %{"room" => room_params}) do
     changeset = Room.changeset(%Room{}, room_params)
-    IO.inspect changeset
     case Repo.insert(changeset) do
       {:ok, _room} ->
         conn

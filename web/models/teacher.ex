@@ -19,6 +19,6 @@ defmodule Naranjo.Teacher do
     struct
     |> cast(params, [:name, :email, :active, :notes])
     |> cast_assoc(:weekdays, with: &Weekday.changeset/2)
-    |> validate_required([:name, :email, :active, :notes])
+    |> validate_required([:name, :email])
   end
 end

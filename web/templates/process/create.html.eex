@@ -1,0 +1,24 @@
+<!-- <div id="hello-world"></div> -->
+
+<%= form_tag "/process" do %>
+  <h4>Lista</h4>
+  <table class="table">
+    <tr>
+      <th>Hora</th>
+      <th>Alumno</th>
+      <th>Profesor</th>
+      <th>Sala</th>
+    </tr>
+    <%= for r <- @results do %>
+      <tr>
+        <td><%= hour(r.hour) %>:00</td>
+        <td><%= r.student["name"] %></td>
+        <td><%= r.teacher["name"] %></td>
+        <td><%= r.room["name"] %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <!-- <button type="submit" class="btn btn-lg btn-primary btn-block">PROCESAR</button> -->
+
+<% end %>

@@ -25,9 +25,8 @@ defmodule Naranjo.Router do
     resources "/rooms", RoomController
   end
 
-  scope "/api", Naranjo do
-    pipe_through :api
-    get "/process/:day", ProcessController, :default
-  end
+  # scope "/api", Naranjo do
+  #   pipe_through :api
+  # end
 
 end

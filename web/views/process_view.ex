@@ -11,8 +11,7 @@ defmodule Naranjo.ProcessView do
 
   def checked(true), do: "checked"
   def checked(false), do: ""
-  
-  def render("default.json", %{students: students, teachers: teachers, rooms: rooms}) do
-    %{students: students, teachers: teachers, rooms: rooms}
-  end
+
+  def hour(h), do: Naranjo.Weekday.hour(h)
+
 end

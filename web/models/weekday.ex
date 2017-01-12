@@ -30,6 +30,8 @@ defmodule Naranjo.Weekday do
       |> Enum.map(fn({_v,k}) -> Enum.member?(arr, k) end)
   end
 
+  def hour(x), do: Enum.at(@available_hours, x)
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
