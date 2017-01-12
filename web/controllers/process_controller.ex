@@ -7,15 +7,6 @@ defmodule Naranjo.ProcessController do
   alias Naranjo.Room
 
   def configure(conn, %{"day" => day}) do
-    IO.inspect day
-    render conn, "configure.html", day: day
-  end
-
-  def new(conn, _params) do
-    render conn, "new.html"
-  end
-
-  def default(conn, %{"day" => day}) do
     students_query = from s in Student,
       join: w in Weekday, on: s.id == w.student_id,
       where: s.active == true and w.day == ^day,
@@ -35,7 +26,17 @@ defmodule Naranjo.ProcessController do
     teachers = Repo.all(teachers_query)
     rooms = Repo.all(rooms_query)
 
-    render conn, "default.json", students: students, teachers: teachers, rooms: rooms
+    render conn, "configure.html", students: students, teachers: teachers, rooms: rooms
   end
+
+  def new(conn, _params) do
+    render conn, "new.html"
+  end
+
+  def create(conn, params) do
+    results = Assignment.process(params)
+    render conn, "create.html", results: results
+  end
+
 
 end
