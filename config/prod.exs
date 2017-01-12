@@ -25,7 +25,7 @@ config :logger, level: :info
 # to the previous section and set your `:url` port to 443:
 #
      config :naranjo, Naranjo.Endpoint,
-       url: [host: "example.com", port: 443],
+       url: [host: "http://138.197.45.143/", port: 443],
        server: true,
        root: ".",
        version: Mix.Project.config[:version]
