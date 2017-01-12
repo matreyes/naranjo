@@ -78,4 +78,3 @@
   <button type="submit" class="btn btn-lg btn-primary btn-block">PROCESAR</button>
 
 <% end %>
->>>>>>> af8f74e02ae502dc018e110c36a36685316b7eda
