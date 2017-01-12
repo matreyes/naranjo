@@ -7,6 +7,7 @@ defmodule Naranjo.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug BasicAuth, username: "naranjo", password: "secret_1x2xx"
   end
 
   pipeline :api do
@@ -18,14 +19,15 @@ defmodule Naranjo.Router do
 
     get "/", PageController, :index
     get "/process", ProcessController, :new
+    post "/process", ProcessController, :create
     get "/process/:day", ProcessController, :configure
     resources "/students", StudentController
     resources "/teachers", TeacherController
     resources "/rooms", RoomController
   end
 
-  # Other scopes may use custom stacks.
   # scope "/api", Naranjo do
   #   pipe_through :api
   # end
+
 end

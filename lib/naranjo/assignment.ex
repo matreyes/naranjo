@@ -1,116 +1,138 @@
 defmodule Assignment do
 
+  alias Naranjo.Weekday
+
+  def process(params) do
+    # IO.inspect params
+    students = params["students"]
+      |> Map.values
+      |> Enum.map(&replace_hours/1)
+    teachers = params["teachers"]
+      |> Map.values
+      |> Enum.map(&replace_hours/1)
+    rooms = params["rooms"]
+      |> Map.values
+      |> Enum.map(&replace_hours/1)
+
+    {:ok, results} = Agent.start_link(fn -> [] end)
+    check_students(%{s: students, t: teachers, r: rooms, acc: [], results: results})
+    n = Agent.get(results, fn(n) -> n end)
+    Enum.at(n, -1)
+  end
+
+  defp replace_hours(obj) do
+    obj |> Map.merge(%{"hours" => Weekday.reference_hours(obj["hours"])})
+  end
+
+  def check_students(%{s: [student | _tail]} = state) do
+    check_hours(student, state)
+  end
+  def check_students(%{acc: acc, results: results}) do
+    Agent.update(results, fn(r) ->
+      [acc | r]
+    end)
+  end
+
+  def check_hours(student, state) do
+    hor = Enum.with_index(student["hours"])
+    Enum.each(hor, fn({available, hour}) ->
+      if available do
+        check_teachers(hour, student, state)
+      end
+    end)
+  end
+
+  def check_teachers(hour, student, state) do
+    Enum.each(state.t, fn(teacher) ->
+      if Enum.at(teacher["hours"], hour) do
+        check_rooms(teacher, hour, student, state)
+      end
+    end)
+  end
+
+  def check_rooms(teacher, hour, student, state) do
+    Enum.each(state.r, fn(room) ->
+      if Enum.at(room["hours"], hour) do
+        new_state(room, teacher, hour, student, state)
+          |> check_students
+      end
+    end)
+  end
+
+  def new_state(room, teacher, hour, student, state) do
+    tea = remove_hour(hour, teacher)
+    room = remove_hour(hour, room)
+
+    %{
+      s: List.delete(state.s, student),
+      t: [tea | List.delete(state.t, teacher)],
+      r: [room | List.delete(state.r, room)],
+      acc: [%{student: student, teacher: teacher, room: room, hour: hour} | state.acc ],
+      results: state.results
+    }
+  end
+
+
+  def remove_hour(hour, obj) do
+    %{obj | "hours" => List.replace_at(obj["hours"], hour, false)}
+  end
+
+  def get_hours(hour) do
+    ["9am", "10am", "11am", "12pm", "2pm", "3pm", "4pm", "5pm", "6pm"]
+      |> Enum.at(hour)
+  end
+
+
   def test do
 
-    alumnos = [
+    students = [
       %{
-        nombre: "Alumno 1",
-        horarios: [0,0,0,0,1,1,1,1,0],
+        name: "student 1",
+        hours: [0,0,0,0,1,1,1,1,0],
         last_pr: []
       },
       %{
-        nombre: "Alumno 2",
-        horarios: [1,1,1,1,1,1,1,1,1],
+        name: "student 2",
+        hours: [1,1,1,1,1,1,1,1,1],
         last_pr: []
       },
       %{
-        nombre: "Alumno 3",
-        horarios: [1,1,0,0,0,1,1,1,1],
-        last_pr: ["Profesor 1"]
+        name: "student 3",
+        hours: [1,1,0,0,0,1,1,1,1],
+        last_pr: ["teacher 1"]
       },
       %{
-        nombre: "Alumno 4",
-        horarios: [1,1,0,0,0,1,1,1,1],
+        name: "student 4",
+        hours: [1,1,0,0,0,1,1,1,1],
         last_pr: []
       }
     ]
 
     # 3,2,1,4
-    profesores = [
+    teachers = [
       %{
-        nombre: "Profesor 1",
-        horarios: [0,1,1,1,0,0,0,0,0]
+        name: "teacher 1",
+        hours: [0,1,1,1,0,0,0,0,0]
       },
       %{
-        nombre: "Profesor 2",
-        horarios: [0,0,0,1,1,1,0,0,0]
+        name: "teacher 2",
+        hours: [0,0,0,1,1,1,0,0,0]
       }
     ]
 
-    salas = [
+    rooms = [
       %{
-        nombre: "Sala A",
-        horarios: [1,1,1,1,1,1,1,1,1]
+        name: "Sala A",
+        hours: [1,1,1,1,1,1,1,1,1]
       }
     ]
 
-    initial_state = %{al: alumnos, pr: profesores, sa: salas, acc: []}
+    initial_state = %{al: students, pr: teachers, sa: rooms, acc: []}
 
-    check_alumnos(initial_state)
+    check_students(initial_state)
   end
 
 
-
-  def check_alumnos(%{al: [alumno | _tail]} = state) do
-    check_horarios(alumno, state)
-  end
-  def check_alumnos(%{acc: acc}) do
-    IO.puts "\n\n"
-    IO.inspect acc
-    IO.puts "\n\n"
-  end
-
-  def check_horarios(alumno, state) do
-    hor = Enum.with_index(alumno.horarios)
-    Enum.each(hor, fn({disponible, hora}) ->
-      if is?(disponible) do
-        check_profesores(hora, alumno, state)
-      end
-    end)
-  end
-
-  def check_profesores(hora, alumno, state) do
-    # IO.inspect state.pr
-    Enum.each(state.pr, fn(profesor) ->
-      if is?(Enum.at(profesor.horarios, hora)) and !Enum.member?(alumno.last_pr, profesor.nombre) do
-        check_salas(profesor, hora, alumno, state)
-      end
-    end)
-  end
-
-  def check_salas(profesor, hora, alumno, state) do
-    Enum.each(state.sa, fn(sala) ->
-      if is?(Enum.at(sala.horarios, hora)) do
-        update_state(sala, profesor, hora, alumno, state)
-          |> check_alumnos
-      end
-    end)
-  end
-
-  def update_state(sala, profesor, hora, alumno, state) do
-    pr = remove_hora(hora, profesor)
-    sa = remove_hora(hora, sala)
-
-    %{state |
-      al: List.delete(state.al, alumno),
-      pr: [pr | List.delete(state.pr, profesor)],
-      sa: [sa | List.delete(state.sa, sala)],
-      acc: [[alumno.nombre, profesor.nombre, sala.nombre, hora] | state.acc ]
-    }
-  end
-
-  def is?(x) do
-    x == 1
-  end
-
-  def remove_hora(hora, obj) do
-    %{obj | horarios: List.replace_at(obj.horarios, hora, 0)}
-  end
-
-  def get_horas(hora) do
-    ["9am", "10am", "11am", "12pm", "2pm", "3pm", "4pm", "5pm", "6pm"]
-      |> Enum.at(hora)
-  end
 end
 
 # Assignment.test
