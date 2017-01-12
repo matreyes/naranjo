@@ -17,6 +17,17 @@ config :naranjo, Naranjo.Endpoint,
   pubsub: [name: Naranjo.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# SMTP mailer
+config :naranjo, Naranjo.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp.domain",
+  port: 1025,
+  username: "austinhlopez@naranjo.com",
+  password:  "password_email_1311",
+  tls: :if_available,
+  ssl: false,
+  retries: 3
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
