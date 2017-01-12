@@ -19,7 +19,7 @@ defmodule Naranjo.Mixfile do
   def application do
     [mod: {Naranjo, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :bamboo, :bamboo_smtp]]
+                    :phoenix_ecto, :postgrex, :bamboo]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,8 +40,7 @@ defmodule Naranjo.Mixfile do
      {:cowboy, "~> 1.0"},
      {:ecto_enum, "~> 1.0"},
      {:distillery, "~> 1.0"},
-     {:bamboo, "~> 0.8"},
-     {:bamboo_smtp, "~> 1.2.1"}]
+     {:bamboo, "~> 0.8"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
