@@ -1,1 +1,35 @@
-<div id="hello-world"></div>
+<div class="row">
+  <h1><%= @day %></h1>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <h2>A Priori:</h2>
+  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <h3>Dropdown: Alumno</h3>
+      <h3>Profesor</h3>
+      <h3>Hora</h3>      
+    </div>
+  </div>
+</div>
+<div class="row">
+  <h2>Configuracion</h2>
+</div>
+<div class="row">
+  <h3>Alumnos</h3>
+  <div>Table: Juan Pablo</div>
+  <div>Horas disponibles (checkbox)</div>
+  <div>Restriccion</div>
+</div>
+<div class="row">
+  <h3>Profesores</h3>
+  <div>Table: Jose Nar</div>
+  <div>Horas disponibles (checkbox)</div>
+</div>
+<div class="row">
+  <h3> Salas?</h3>
+</div>
+<div id="hello-world">
+</div>
+

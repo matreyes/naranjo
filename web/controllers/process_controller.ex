@@ -8,7 +8,7 @@ defmodule Naranjo.ProcessController do
 
   def configure(conn, %{"day" => day}) do
     IO.inspect day
-    render conn, "configure.html"
+    render conn, "configure.html", day: day
   end
 
   def new(conn, _params) do
