@@ -2,8 +2,11 @@ defmodule Assignment do
 
   alias Naranjo.Weekday
 
+  def get_state(pid) do
+    Agent.get(pid, fn(n) -> n end)
+  end
+
   def process(params) do
-    # IO.inspect params
     students = params["students"]
       |> Map.values
       |> Enum.map(&replace_hours/1)
@@ -14,10 +17,12 @@ defmodule Assignment do
       |> Map.values
       |> Enum.map(&replace_hours/1)
 
-    {:ok, results} = Agent.start_link(fn -> [] end)
-    check_students(%{s: students, t: teachers, r: rooms, acc: [], results: results})
-    n = Agent.get(results, fn(n) -> n end)
-    Enum.at(n, -1)
+    now = :os.system_time(:seconds)
+    {:ok, a_pid} = Agent.start_link(fn -> {[],0,now} end)
+    check_students(%{s: students, t: teachers, r: rooms, acc: [], a_pid: a_pid})
+    {results, _, _} = full_state = get_state(a_pid)
+    IO.inspect full_state
+    Enum.at(results, -1)
   end
 
   defp replace_hours(obj) do
@@ -25,11 +30,19 @@ defmodule Assignment do
   end
 
   def check_students(%{s: [student | _tail]} = state) do
-    check_hours(student, state)
+    {_, results_number, time} = get_state(state.a_pid)
+    seconds = :os.system_time(:seconds) - time
+    if results_number < 3 and (seconds < 10 or results_number < 1) and seconds < 300 do
+      check_hours(student, state)
+    end
   end
-  def check_students(%{acc: acc, results: results}) do
-    Agent.update(results, fn(r) ->
-      [acc | r]
+  def check_students(%{acc: acc, a_pid: a_pid}) do
+    Agent.update(a_pid, fn({r,n,time}=st) ->
+      if n < 3 do
+        {[acc | r], n+1, time}
+      else
+        st
+      end
     end)
   end
 
@@ -68,7 +81,7 @@ defmodule Assignment do
       t: [tea | List.delete(state.t, teacher)],
       r: [room | List.delete(state.r, room)],
       acc: [%{student: student, teacher: teacher, room: room, hour: hour} | state.acc ],
-      results: state.results
+      a_pid: state.a_pid
     }
   end
 

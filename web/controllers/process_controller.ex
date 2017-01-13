@@ -22,8 +22,8 @@ defmodule Naranjo.ProcessController do
       where: r.active == true and w.day == ^day,
       select: %{id: r.id, name: r.name, hours: w.hours}
 
-    students = Repo.all(students_query)
-    teachers = Repo.all(teachers_query)
+    students = Repo.all(students_query) |> Enum.shuffle
+    teachers = Repo.all(teachers_query) |> Enum.shuffle
     rooms = Repo.all(rooms_query)
 
     render conn, "configure.html", students: students, teachers: teachers, rooms: rooms
@@ -34,7 +34,7 @@ defmodule Naranjo.ProcessController do
   end
 
   def create(conn, params) do
-    results = Assignment.process(params)
+    results = Assignment.process(params) |> Enum.sort(fn(a,b) -> a.hour <= b.hour end)
     render conn, "create.html", results: results
   end
 
