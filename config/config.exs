@@ -17,6 +17,17 @@ config :naranjo, Naranjo.Endpoint,
   pubsub: [name: Naranjo.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# SMTP mailer
+config :naranjo, Naranjo.Mailer,
+  adapter: Bamboo.SendGrid,
+  server: "smtp.sendgrid.net",
+  port: 25,
+  username: "apikey",
+  password:  "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",
+  tls: :if_available,
+  ssl: false,
+  retries: 3
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
