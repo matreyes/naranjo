@@ -17,4 +17,8 @@ defmodule Naranjo.History do
     |> cast(params, [:schedule])
     |> validate_required([:schedule])
   end
+
+  def email_student(struct) do
+    Naranjo.Email.student_schedule(struct) |> Naranjo.Mailer.deliver_later
+  end
 end

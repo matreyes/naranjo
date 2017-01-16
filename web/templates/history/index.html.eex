@@ -13,8 +13,8 @@
   <tbody>
     <%= for history <- @histories do %>
       <tr>
-        <td><%= history.student %></td>
-        <td><%= history.teacher %></td>
+        <td><%= link history.student, to: student_path(@conn, :edit, history.student_id) %></td>
+        <td><%= link history.teacher, to: teacher_path(@conn, :edit, history.teacher_id)%></td>
         <td><%= prettydate(history.schedule) %></td>
       </tr>
     <% end %>

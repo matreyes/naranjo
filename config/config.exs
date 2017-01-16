@@ -19,12 +19,12 @@ config :naranjo, Naranjo.Endpoint,
 
 # SMTP mailer
 config :naranjo, Naranjo.Mailer,
-  adapter: Bamboo.SendGrid,
-  server: "smtp.sendgrid.net",
-  port: 25,
-  username: "apikey",
-  password:  "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",
-  tls: :if_available,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp.gmail.com",
+  port: 587,
+  username: "horarios.nei@gmail.com",
+  password:  "secret_1x2xx",
+  tls: :always,
   ssl: false,
   retries: 3
 

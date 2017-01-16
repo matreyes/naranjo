@@ -7,7 +7,7 @@ defmodule Naranjo.ProcessController do
   alias Naranjo.Room
   alias Naranjo.History
 
-  @repeated_teachers
+  @repeated_teachers 3
 
   def configure(conn, %{"day" => day}) do
     history_query = from h in History,
@@ -63,7 +63,13 @@ defmodule Naranjo.ProcessController do
           }
         end)
 
-    Repo.insert_all(History, h)
+    {n, inserted} = Repo.insert_all(History, h, returning: true)
+
+    inserted
+      |> Repo.preload([:student, :teacher])
+      |> Enum.filter(fn(x) -> Mix.env == :prod or x.student.email == "matreyes@gmail.com" end)
+      |> Enum.each(&History.email_student/1)
+
     conn
     |> put_flash(:info, "Se han enviado los correos.")
     |> redirect(to: page_path(conn, :index))

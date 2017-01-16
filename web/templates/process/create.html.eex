@@ -22,8 +22,12 @@
         </tr>
       <% end %>
     </table>
-    <div id="datepicker"></div>
-    <button type="submit" class="btn btn-lg btn-primary btn-block">GUARDAR</button>
+    <center>
+      Fecha a ser asignada:
+      <div id="datepicker"></div>
+      <br>
+      <button type="submit" class="btn btn-primary">GUARDAR</button>
+    </center>
   <% end %>
 <% else %>
   <center>

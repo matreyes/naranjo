@@ -30,7 +30,7 @@ defmodule Naranjo.HistoryController do
     from h in History,
       join: t in Teacher, on: t.id == h.teacher_id,
       join: s in Student, on: s.id == h.student_id,
-      select: %{schedule: h.schedule, teacher: t.name, student: s.name},
+      select: %{schedule: h.schedule, teacher: t.name, student: s.name, teacher_id: h.teacher_id, student_id: h.student_id},
       order_by: [desc: h.inserted_at],
       limit: 100
   end

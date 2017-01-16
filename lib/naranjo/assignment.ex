@@ -78,12 +78,12 @@ defmodule Assignment do
 
   def new_state(room, teacher, hour, student, state) do
     tea = remove_hour(hour, teacher)
-    room = remove_hour(hour, room)
+    ro = remove_hour(hour, room)
 
     %{
       s: List.delete(state.s, student),
       t: [tea | List.delete(state.t, teacher)],
-      r: [room | List.delete(state.r, room)],
+      r: [ro | List.delete(state.r, room)],
       acc: [%{student: student, teacher: teacher, room: room, hour: hour} | state.acc ],
       a_pid: state.a_pid
     }
