@@ -1,0 +1,22 @@
+<h2>Historial</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Alumno</th>
+      <th>Interrogador</th>
+      <th>Horario</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for history <- @histories do %>
+      <tr>
+        <td><%= history.student %></td>
+        <td><%= history.teacher %></td>
+        <td><%= prettydate(history.schedule) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

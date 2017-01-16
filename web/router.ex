@@ -20,10 +20,12 @@ defmodule Naranjo.Router do
     get "/", PageController, :index
     get "/process", ProcessController, :new
     post "/process", ProcessController, :create
+    post "/process/save", ProcessController, :history
     get "/process/:day", ProcessController, :configure
     resources "/students", StudentController
     resources "/teachers", TeacherController
     resources "/rooms", RoomController
+    get "/histories", HistoryController, :index
   end
 
   # scope "/api", Naranjo do

@@ -1,24 +1,29 @@
-<!-- <div id="hello-world"></div> -->
 <%= if is_list(@results) and length(@results) > 0 do %>
-  <%= form_tag "/process" do %>
+  <%= form_tag "/process/save" do %>
     <h4>Lista</h4>
     <table class="table">
       <tr>
         <th>Hora</th>
         <th>Alumno</th>
-        <th>Profesor</th>
+        <th>Interrogador</th>
         <th>Sala</th>
       </tr>
-      <%= for r <- @results do %>
+      <%= for {r, i} <- Enum.with_index(@results) do %>
         <tr>
-          <td><%= hour(r.hour) %>:00</td>
+          <td>
+            <input type="hidden" name="history[<%= i %>][student]" value="<%= r.student["id"] %>" />
+            <input type="hidden" name="history[<%= i %>][teacher]" value="<%= r.teacher["id"] %>" />
+            <input type="hidden" name="history[<%= i %>][hour]" value="<%= hour(r.hour) %>" />
+            <%= hour(r.hour) %>:00
+          </td>
           <td><%= r.student["name"] %></td>
           <td><%= r.teacher["name"] %></td>
           <td><%= r.room["name"] %></td>
         </tr>
       <% end %>
     </table>
-    <!-- <button type="submit" class="btn btn-lg btn-primary btn-block">PROCESAR</button> -->
+    <div id="datepicker"></div>
+    <button type="submit" class="btn btn-lg btn-primary btn-block">GUARDAR</button>
   <% end %>
 <% else %>
   <center>

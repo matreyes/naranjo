@@ -1,14 +1,19 @@
 
 <div class="row" style="margin-top: 150px">
-  <div class="col-lg-4 text-center">
+
+  <div class="col-lg-3 text-center">
+    <%= link "HISTORIAL", to: history_path(@conn, :index), class: "btn btn-lg btn-info btn-block" %>
+  </div>
+  
+  <div class="col-lg-3 text-center">
     <%= link "ALUMNOS", to: student_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
   </div>
 
-  <div class="col-lg-4 text-center">
+  <div class="col-lg-3 text-center">
     <%= link "PROFESORES", to: teacher_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
   </div>
 
-  <div class="col-lg-4 text-center">
+  <div class="col-lg-3 text-center">
     <%= link "SALAS", to: room_path(@conn, :index), class: "btn btn-lg btn-default btn-block" %>
   </div>
 </div>

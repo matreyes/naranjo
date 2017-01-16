@@ -1,0 +1,23 @@
+<h2>Show history</h2>
+
+<ul>
+
+  <li>
+    <strong>Student:</strong>
+    <%= @history.student_id %>
+  </li>
+
+  <li>
+    <strong>Teacher:</strong>
+    <%= @history.teacher_id %>
+  </li>
+
+  <li>
+    <strong>Schedule:</strong>
+    <%= @history.schedule %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: history_path(@conn, :edit, @history) %>
+<%= link "Back", to: history_path(@conn, :index) %>

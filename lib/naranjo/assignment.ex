@@ -21,7 +21,6 @@ defmodule Assignment do
     {:ok, a_pid} = Agent.start_link(fn -> {[],0,now} end)
     check_students(%{s: students, t: teachers, r: rooms, acc: [], a_pid: a_pid})
     {results, _, _} = full_state = get_state(a_pid)
-    IO.inspect full_state
     Enum.at(results, -1)
   end
 

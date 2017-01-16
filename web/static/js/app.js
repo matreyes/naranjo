@@ -22,11 +22,62 @@ import "phoenix_html"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import Processor from "./processor/processor"
+import {DateField, DatePicker} from "react-date-picker"
+import moment from "moment"
 
-if(document.getElementById("hello-world") != null){
+
+
+
+
+
+class MyDatePicker extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      calendar: moment().format("DD-MM-YYYY")
+    };
+  }
+
+  updateDateString(datestring) {
+    this.setState({calendar: datestring})
+  }
+
+  render(){
+    return(
+    <div>
+      <input type="hidden" name="day" value={this.state.calendar} readOnly={true}/>
+
+      <DateField
+        dateFormat="DD-MM-YYYY"
+        forceValidDate={true}
+        updateOnDateClick={true}
+        collapseOnDateClick={true}
+        defaultValue={new Date()}
+        showClock={false}
+        onChange={(dateString, { dateMoment, timestamp}) => {this.updateDateString(dateString)}}
+        >
+        <DatePicker
+          navigation={true}
+          locale="es"
+          updateOnWheel={false}
+          forceValidDate={true}
+          highlightWeekends={true}
+          highlightToday={true}
+          weekNumbers={false}
+          weekStartDay={1}
+          footer={false}
+          />
+      </DateField>
+
+    </div>
+  )
+  }
+};
+
+if(document.getElementById("datepicker") != null){
   ReactDOM.render(
-    <Processor/>,
-    document.getElementById("hello-world")
-  )  
+    <MyDatePicker/>,
+    document.getElementById("datepicker")
+  )
 }

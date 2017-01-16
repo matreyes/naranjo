@@ -22,6 +22,8 @@
             <!-- <%= link "Show", to: student_path(@conn, :show, student), class: "btn btn-default btn-xs" %> -->
             <%= link "Editar", to: student_path(@conn, :edit, student), class: "btn btn-default btn-xs" %>
             <%= link "Eliminar", to: student_path(@conn, :delete, student), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+            <%= link "Historial", to: history_path(@conn, :index, %{student: student}), class: "btn btn-xs" %>
+
           </td>
         </tr>
     <% end %>

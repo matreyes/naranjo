@@ -1,4 +1,3 @@
-<!-- <div id="hello-world"></div> -->
 <h2>
   Configuración para
   "<%= @conn.params["day"] %>"
@@ -29,7 +28,7 @@
 
   <hr>
 
-  <h4>Profesores</h4>
+  <h4>Interrogadores</h4>
   <table class="table">
     <tr>
       <td></td>
