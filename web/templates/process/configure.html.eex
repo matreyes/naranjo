@@ -14,14 +14,32 @@
     </tr>
     <%= for s <- @students do %>
       <tr>
-        <td class="name"><%= s.name %></td>
-        <input type="hidden" name="students[<%= s.id %>][id]" value="<%= s.id %>" />
-        <input type="hidden" name="students[<%= s.id %>][name]" value="<%= s.name %>" />
+        <td class="name">
+          <input type="hidden" name="students[<%= s.id %>][id]" value="<%= s.id %>" />
+          <input type="hidden" name="students[<%= s.id %>][name]" value="<%= s.name %>" />
+          <%= s.name %>
+          <%= if length(s.history) > 0 do %>
+            <a href="#" class="show_teachers" data-target="teachers_<%= s.id %>">R</a>
+          <% end %>
+        </td>
         <%= for {k,h} <- Enum.with_index(s.hours) do %>
           <td class="text-center">
             <input type="checkbox" name="students[<%= s.id %>][hours][]" value="<%= h %>" <%= checked(k) %>>
           </td>
         <% end %>
+      </tr>
+      <tr class="hidden_teachers" id="teachers_<%= s.id %>" style="display: none;">
+        <td></td>
+        <td colspan="<%= length(available_hours) %>">
+          <%= for h <- s.history do %>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" name="students[<%= s.id %>][teacher][]" value="<%= h.teacher_id %>" class="form-check-input" checked>
+                <%= h.teacher_name %>
+              </label>
+            </div>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </table>

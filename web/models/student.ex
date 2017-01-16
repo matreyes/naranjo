@@ -1,6 +1,7 @@
 defmodule Naranjo.Student do
   use Naranjo.Web, :model
   alias Naranjo.Weekday
+  alias Naranjo.History
 
   schema "students" do
     field :name, :string
@@ -8,6 +9,7 @@ defmodule Naranjo.Student do
     field :active, :boolean, default: true
     field :notes, :string
     has_one :weekday, Weekday, on_delete: :delete_all
+    has_many :histories, History, on_delete: :delete_all
 
     timestamps()
   end

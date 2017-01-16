@@ -7,11 +7,20 @@ defmodule Naranjo.ProcessController do
   alias Naranjo.Room
   alias Naranjo.History
 
+  @repeated_teachers
+
   def configure(conn, %{"day" => day}) do
+    history_query = from h in History,
+      join: t in Teacher, on: t.id == h.teacher_id,
+      order_by: [desc: h.schedule],
+      select: %{teacher_id: h.teacher_id, teacher_name: t.name}
+
     students_query = from s in Student,
       join: w in Weekday, on: s.id == w.student_id,
-      where: s.active == true and w.day == ^day,
-      select: %{id: s.id, name: s.name, hours: w.hours}
+      where: s.active == true and w.day == ^day
+
+    students_with_history = from [s, w] in students_query,
+      preload: [histories: ^history_query, weekday: w]
 
     teachers_query = from t in Teacher,
       left_join: w in Weekday, on: t.id == w.teacher_id,
@@ -23,7 +32,9 @@ defmodule Naranjo.ProcessController do
       where: r.active == true and w.day == ^day,
       select: %{id: r.id, name: r.name, hours: w.hours}
 
-    students = Repo.all(students_query) |> Enum.shuffle
+      IO.inspect students_with_history
+
+    students = Repo.all(students_with_history) |> Enum.map(fn(x) -> %{id: x.id, name: x.name, hours: x.weekday.hours, history: Enum.take(x.histories, @repeated_teachers)} end) |> Enum.shuffle
     teachers = Repo.all(teachers_query) |> Enum.shuffle
     rooms = Repo.all(rooms_query)
 

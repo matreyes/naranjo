@@ -24,9 +24,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import {DateField, DatePicker} from "react-date-picker"
 import moment from "moment"
-
-
-
+import $ from "jquery"
 
 
 
@@ -81,3 +79,11 @@ if(document.getElementById("datepicker") != null){
     document.getElementById("datepicker")
   )
 }
+
+$(function () {
+  $(".show_teachers").click(function(e){
+    e.preventDefault();
+    var target = $(this).data("target")
+    $(`#${target}`).toggle()
+  })
+})

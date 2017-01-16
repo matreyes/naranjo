@@ -55,7 +55,12 @@ defmodule Assignment do
   end
 
   def check_teachers(hour, student, state) do
-    Enum.each(state.t, fn(teacher) ->
+    a_teachers = case student["teacher"] do
+      t when is_list(t) ->
+        state.t |> Enum.reject(fn(x) -> Enum.member?(t, x["id"]) end)
+      _ -> state.t
+    end
+    Enum.each(a_teachers, fn(teacher) ->
       if Enum.at(teacher["hours"], hour) do
         check_rooms(teacher, hour, student, state)
       end
